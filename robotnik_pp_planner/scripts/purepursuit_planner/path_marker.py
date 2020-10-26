@@ -181,6 +181,7 @@ class PointPathManager(InteractiveMarkerServer):
 		self._go_service = rospy.Service('%s/go'%rospy.get_name(), Empty, self.goService)
 		self._go_back_service = rospy.Service('%s/go_back'%rospy.get_name(), Empty, self.goBackService)
 		self._cancel_service = rospy.Service('%s/cancel'%rospy.get_name(), Empty, self.cancelService)
+		self._load_points_service = rospy.Service('%s/load_points'%rospy.get_name(), Empty, self.loadPointsService)
 		
 	
 	## @brief Creates a new PointPath and save it a list
@@ -367,6 +368,13 @@ class PointPathManager(InteractiveMarkerServer):
 	def cancelService(self, param):
 		rospy.loginfo('%s::cancelService'%(rospy.get_name()))
 		self.stopRouteCB(None)
+		
+		return []
+
+	## @brief Fake service to emulate the event load 
+	def loadPointsService(self, param):
+		rospy.loginfo('%s::loadPointsService'%(rospy.get_name()))
+		self.loadPointsCB(None)
 		
 		return []
 		

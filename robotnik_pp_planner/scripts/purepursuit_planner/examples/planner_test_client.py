@@ -43,4 +43,4 @@ if __name__ == '__main__':
 		result = purepursuit_client()
 		rospy.loginfo( 'Result: %d'%(result.route_result))
 	except rospy.ROSInterruptException:
-		print "program interrupted before completion"
+		print 'program interrupted before completion'

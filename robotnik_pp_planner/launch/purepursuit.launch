@@ -1,13 +1,22 @@
 <?xml version="1.0"?>
 <launch>
+  <!-- 去除了AMCL，此处手动连接map与odom tf-->
+  <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom 100"/>
 
   <!-- start purepursuit node -->
   <node pkg="robotnik_pp_planner" type="robotnik_pp_planner_node" name="robotnik_pp_planner" output="screen">
 	<!-- Options: MAP, ODOM -->	
-	<param name="position_source" value="MAP" type="string"/>
+	<param name="position_source" value="ODOM" type="string"/>
 	<param name="target_frame" value="/base_link" type="string"/>
-	<param name="d_lookahear_min" value="0.4"/>
-  	<param name="kr" value="0.2"/>
+	<!-- 影响转弯半径 -->
+	<param name="d_lookahear_min" value="0.5"/>
+	<param name="d_lookahear_max" value="1.5"/>
+
+	<param name="max_speed_" value="0.05"/>
+
+	<!-- 到达误差 -->
+  	<param name="kr" value="0.05"/>
+
 	<param name="desired_freq" value="50.0"/>
 
 	<!--for Ackerman-->

@@ -1165,7 +1165,7 @@ public:
 		if ( c2 <= c1 ) {
 			//printf("kanban::DistP2S: c2 <= c1\n");
 			di = Dist(current_position.x, current_position.y, s1.dX, s1.dY);
-			Pb->dX = s1.dY;
+			Pb->dX = s1.dX;
 			Pb->dY = s1.dY;
 			return di;
 		}

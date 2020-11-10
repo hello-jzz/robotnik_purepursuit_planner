@@ -1211,8 +1211,8 @@ public:
 					dmin = d;
 					j = i;      // j : index to closest segment					
 				}
-				ROS_INFO("PointDlh. Distance to segment %d(%.2lf, %2.lf)->%d(%.2lf, %2.lf) = %.3lf,point (%.3lf, %.3lf) (DMIN = %.3lf)", i,
-				s0.dX, s0.dY, i+1, s1.dX, s1.dY, d, Pb1.dX, Pb1.dY, dmin);
+				//ROS_INFO("PointDlh. Distance to segment %d(%.2lf, %2.lf)->%d(%.2lf, %2.lf) = %.3lf,point (%.3lf, %.3lf) (DMIN = %.3lf)", i,
+				//s0.dX, s0.dY, i+1, s1.dX, s1.dY, d, Pb1.dX, Pb1.dY, dmin);
 			}else{
 				ROS_ERROR("%s::PointDlh: Error Getting waypoints", sComponentName.c_str());
 				return ERROR;
@@ -1228,7 +1228,7 @@ public:
 				ROS_ERROR("%s::PointDlh: Error setting current waypoint to %d", sComponentName.c_str(), j);
 				return ERROR;
 			}else{ // OK
-				ROS_INFO("PointDlh:: Changing waypoint to %d", j);
+				//ROS_INFO("PointDlh:: Changing waypoint to %d", j);
 				if(j == (size - 2)){	// Penultimo waypoint
 					Waypoint w_last, w_before_last;
 					pathCurrent.GetCurrentWaypoint(&w_before_last);	// Penultimo waypoint
@@ -1368,8 +1368,8 @@ public:
 		double aux_wref = wref;
 		wref += Kr * dth;
 		
-		ROS_INFO("Purepursuit: current pos (%.2lf, %.2lf), next pos (%.2lf, %.2lf), lookahead %.2lf, yaw = %.3lf, curv = %.3lf, dth = %.3lf, wref = %.3lf(%.3lf), speed=%.3lf", current_position.x, current_position.y, next_position.x, next_position.y, dLookAhead, yaw, curv, dth, wref, aux_wref, dAuxSpeed);
-		ROS_INFO("Purepursuit: yaw = %.3lf, curv = %.3lf, dth = %.3lf, wref = %.3lf", yaw, curv, dth, wref);
+		//ROS_INFO("Purepursuit: current pos (%.2lf, %.2lf), next pos (%.2lf, %.2lf), lookahead %.2lf, yaw = %.3lf, curv = %.3lf, dth = %.3lf, wref = %.3lf(%.3lf), speed=%.3lf", current_position.x, current_position.y, next_position.x, next_position.y, dLookAhead, yaw, curv, dth, wref, aux_wref, dAuxSpeed);
+		//ROS_INFO("Purepursuit: yaw = %.3lf, curv = %.3lf, dth = %.3lf, wref = %.3lf", yaw, curv, dth, wref);
 		
 		
 		////////////////// Sets the speed depending of distance or speed restrictions /////////
@@ -1409,7 +1409,7 @@ public:
 		if( pathCurrent.GetCurrentWaypointIndex() >= (pathCurrent.NumOfWaypoints() - 2) ){
 			ret = -10;
 			double ddist2 = Dist( current_position.x, current_position.y, last_waypoint.dX, last_waypoint.dY);
-			ROS_INFO("ddist2 : %f", ddist2);
+			//ROS_INFO("ddist2 : %f", ddist2);
 			// Distancia recorrida
 			//dDistCovered = Dist( current_position.px, current_position.py, odomWhenLastWaypoint.px, odomWhenLastWaypoint.py);
 			if (ddist2 < WAYPOINT_POP_DISTANCE_M) {

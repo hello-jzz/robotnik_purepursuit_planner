@@ -50,9 +50,9 @@
 
 #define WAYPOINT_POP_DISTANCE_M				0.10		//Distancia mínima para alcanzar punto objetivo m (PurePursuit)
 
-#define AGVS_FIRST_DECELERATION_DISTANCE 	0.5 	// meters -> when the vehicle is arriving to the goal, it has to decelarate at this distance
+#define AGVS_FIRST_DECELERATION_DISTANCE 	0.8 	// meters -> when the vehicle is arriving to the goal, it has to decelarate at this distance
 #define AGVS_FIRST_DECELERATION_MAXSPEED	0.15	// m/s
-#define AGVS_SECOND_DECELERATION_DISTANCE   0.25 	// meters -> when the vehicle is arriving to the goal, it has to decelarate another time at this distance
+#define AGVS_SECOND_DECELERATION_DISTANCE   0.3 	// meters -> when the vehicle is arriving to the goal, it has to decelarate another time at this distance
 #define AGVS_SECOND_DECELERATION_MAXSPEED	0.1 	// m/s
 #define AGVS_DEFAULT_KR	0.20						// 
 

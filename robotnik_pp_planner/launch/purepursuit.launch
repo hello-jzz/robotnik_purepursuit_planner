@@ -9,15 +9,15 @@
 	<param name="position_source" value="ODOM" type="string"/>
 	<param name="target_frame" value="/base_link" type="string"/>
 	<!-- 影响转弯半径 -->
-	<param name="d_lookahear_min" value="0.5"/>
+	<param name="d_lookahear_min" value="0.6"/>
 	<param name="d_lookahear_max" value="1.5"/>
 
 	<param name="max_speed" value="0.6"/>
 
-  	<param name="kr" value="0.15"/>
+  	<param name="kr" value="0.2"/>
 
 	<!-- 轮间距 -->
-	<!-- <param name="d_dist_wheel_to_center" value="0.32225"/> -->
+	<param name="d_dist_wheel_to_center" value="0.32225"/>
 
 	<param name="desired_freq" value="30.0"/>
 

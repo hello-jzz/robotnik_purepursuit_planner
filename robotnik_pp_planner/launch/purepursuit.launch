@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <!-- 去除了AMCL，此处手动连接map与odom tf-->
-  <!-- node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom 100"/ -->
+  <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom 100" />
 
   <!-- start purepursuit node -->
   <node pkg="robotnik_pp_planner" type="robotnik_pp_planner_node" name="robotnik_pp_planner" output="screen">
@@ -32,7 +32,8 @@
 
 	<!--for Twist-->
 	<param name="command_type" value="Twist"/>
- 	<param name="odom_topic" value="/odometry/filtered_map"/>
+ 	<!-- <param name="odom_topic" value="/odometry/filtered_map"/> -->
+	 <param name="odom_topic" value="/odom_fusion"/>
         <param name="cmd_topic_vel" value="/nav_vel"/>
   </node>
 

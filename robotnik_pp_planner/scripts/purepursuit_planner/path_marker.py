@@ -24,6 +24,14 @@ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
 CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
+
+log:
+20201117:
+roslaunch robotnik_pp_planner purepursuit.launch
+roslaunch robotnik_pp_planner purepursuit_marker.launch 
+
+rosservice call /path_marker/load_points waypoints_office.txt   
+
 """
 
 import roslib; roslib.load_manifest("interactive_markers")
@@ -39,6 +47,7 @@ import actionlib
 from geometry_msgs.msg import Pose2D
 from robotnik_pp_msgs.msg import goal, GoToGoal, GoToAction
 from std_srvs.srv import Empty
+from robotnik_pp_msgs.srv import WayPointFilePath, WayPointFilePathResponse
 
 # Client based on ActionServer to send goals to the purepursuit node
 class PurepursuitClient():
@@ -176,12 +185,13 @@ class PointPathManager(InteractiveMarkerServer):
 		rp = rospkg.RosPack()		
 		# loads a ui file for the dialog
 		self.points_file_path = os.path.join(rp.get_path('robotnik_pp_planner'), 'config', 'waypoints_office.txt')
-		
+		self.points_file_base_path = os.path.join(rp.get_path('robotnik_pp_planner'), 'config')
+
 		#rospy.Timer(rospy.Duration(5), self.createNewPoint)
 		self._go_service = rospy.Service('%s/go'%rospy.get_name(), Empty, self.goService)
 		self._go_back_service = rospy.Service('%s/go_back'%rospy.get_name(), Empty, self.goBackService)
 		self._cancel_service = rospy.Service('%s/cancel'%rospy.get_name(), Empty, self.cancelService)
-		self._load_points_service = rospy.Service('%s/load_points'%rospy.get_name(), Empty, self.loadPointsService)
+		self._load_points_service = rospy.Service('%s/load_points'%rospy.get_name(), WayPointFilePath, self.loadPointsService)
 		
 	
 	## @brief Creates a new PointPath and save it a list
@@ -279,7 +289,10 @@ class PointPathManager(InteractiveMarkerServer):
 			self.deleteAllPoints()
 		
 		try:
-			file_points = open(self.points_file_path, 'r')
+			wayPointFilePath = os.path.join(self.points_file_base_path,feedback)
+			file_points = open(wayPointFilePath, 'r')
+            #wayPointFilePath = os.path.join(self.points_file_base_path, feedback)  
+            #file_points = open(wayPointFilePath, 'r')
 		except IOError, e:
 			rospy.logerr( 'agvs_path_marker::loadPointsCB: File %s not found: %s'%(self.points_file_path, e))
 			return
@@ -372,11 +385,12 @@ class PointPathManager(InteractiveMarkerServer):
 		return []
 
 	## @brief Fake service to emulate the event load 
-	def loadPointsService(self, param):
+	def loadPointsService(self, req):
 		rospy.loginfo('%s::loadPointsService'%(rospy.get_name()))
-		self.loadPointsCB(None)
+		rospy.loginfo('filePath::%s'%(req.filePath))
+		self.loadPointsCB(req.filePath)
 		
-		return []
+		return WayPointFilePathResponse("OK")
 		
 		
 if __name__=="__main__":

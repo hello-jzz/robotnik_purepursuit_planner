@@ -1071,6 +1071,8 @@ public:
 			return;
 		}
 		
+		// 返回0就表示还没完成线路
+		// 重新计算参数以后继续执行一次pure pursuit迭代
 		int ret = PurePursuit();
 		
 		if(ret == -1){
@@ -1194,6 +1196,7 @@ public:
 
 		int size = pathCurrent.NumOfWaypoints();
 
+		// Array与路线上连续点之间的距离 
 		d_seg = new double[size]; //array con la distancia entre puntos consecutivos en la ruta
 
 		// 1- Find closest segment
@@ -1316,7 +1319,7 @@ public:
 		/* 获取当前航向角 */
 		yaw = current_position.theta;
 		
-		//
+		// 根据当前速度微调lookahead距离
 		//Updates the lookahead depending of the current velocity
 		UpdateLookAhead();
 		
@@ -1347,6 +1350,8 @@ public:
 			return -1;
 		}
 
+		// 当前位置与终点的距离
+		// 后面会根据该距离实行阶梯减速
 		double dAuxDist = Dist(current_position.x, current_position.y, last_waypoint.dX, last_waypoint.dY);	//dist(waypoints.back().pos, current_position);
 
 		if(pathCurrent.GetNextWaypoint(&next_waypoint) == ERROR){
@@ -1404,7 +1409,7 @@ public:
 			SetRobotSpeed(dAuxSpeed, wref*direction); 
 		}
 		
-		//
+		// 在倒数第二个点和最后一个点之间运行的时候检查当前机器人与终点的距离
 		// When the robot is on the last waypoint, checks the distance to the end
 		if( pathCurrent.GetCurrentWaypointIndex() >= (pathCurrent.NumOfWaypoints() - 2) ){
 			ret = -10;

@@ -15,6 +15,11 @@ add_message_files(
    goal.msg
 )
 
+add_service_files(
+  FILES
+  WayPointFilePath.srv
+)
+
 add_action_files(DIRECTORY action FILES GoTo.action)
 
 ## Generate added messages and services with any dependencies listed here

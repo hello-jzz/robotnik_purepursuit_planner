@@ -12,7 +12,7 @@
 	<param name="d_lookahear_min" value="0.6"/>
 	<param name="d_lookahear_max" value="1.5"/>
 
-	<param name="max_speed" value="0.6"/>
+	<param name="max_speed" value="1.0"/>
 
   	<param name="kr" value="0.2"/>
 

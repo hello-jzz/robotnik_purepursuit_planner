@@ -1412,19 +1412,35 @@ public:
 		// 在倒数第二个点和最后一个点之间运行的时候检查当前机器人与终点的距离
 		// When the robot is on the last waypoint, checks the distance to the end
 		if( pathCurrent.GetCurrentWaypointIndex() >= (pathCurrent.NumOfWaypoints() - 2) ){
+	        // 如果误差越来越大，就可以停车了
+		    static double preDistance = std::numeric_limits<double>::max();
+			// 防止定位突变导致的突然停车
+			static int  exceptionCnt = 0;
 			ret = -10;
 			double ddist2 = Dist( current_position.x, current_position.y, last_waypoint.dX, last_waypoint.dY);
+			// Pifan
+			double distanceDiff = ddist2 - preDistance;
 			//ROS_INFO("ddist2 : %f", ddist2);
 			// Distancia recorrida
 			//dDistCovered = Dist( current_position.px, current_position.py, odomWhenLastWaypoint.px, odomWhenLastWaypoint.py);
-			if (ddist2 < WAYPOINT_POP_DISTANCE_M) {
+			if (distanceDiff > 1e-6)
+			{
+				exceptionCnt++;
+				ROS_ERROR("distanceDiff : %f", distanceDiff);
+			}
+			
+			if ((ddist2 < WAYPOINT_POP_DISTANCE_M) || (exceptionCnt >= 5)) {
 				SetRobotSpeed(0.0, 0.0);
 				
 				ROS_INFO("%s::PurePursuit: target position reached (%lf, %lf, %lf). Ending current path", sComponentName.c_str(), current_position.x, current_position.x, current_position.theta*180.0/Pi);
 				
 				pathCurrent.Clear();
+				preDistance = std::numeric_limits<double>::max();
+				exceptionCnt = 0;
 				return 1;
 			}
+			//Pifan
+			preDistance = ddist2;
 		}
 
 		return 0;

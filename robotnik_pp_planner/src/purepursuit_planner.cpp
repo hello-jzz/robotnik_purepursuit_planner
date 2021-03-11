@@ -1423,13 +1423,13 @@ public:
 			//ROS_INFO("ddist2 : %f", ddist2);
 			// Distancia recorrida
 			//dDistCovered = Dist( current_position.px, current_position.py, odomWhenLastWaypoint.px, odomWhenLastWaypoint.py);
-			if (distanceDiff > 1e-6)
+			if (distanceDiff > 1e-3)
 			{
 				exceptionCnt++;
 				ROS_ERROR("distanceDiff : %f", distanceDiff);
 			}
 			
-			if ((ddist2 < WAYPOINT_POP_DISTANCE_M) || (exceptionCnt >= 5)) {
+			if ((ddist2 < WAYPOINT_POP_DISTANCE_M) || (exceptionCnt >= 10)) {
 				SetRobotSpeed(0.0, 0.0);
 				
 				ROS_INFO("%s::PurePursuit: target position reached (%lf, %lf, %lf). Ending current path", sComponentName.c_str(), current_position.x, current_position.x, current_position.theta*180.0/Pi);
